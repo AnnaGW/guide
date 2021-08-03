@@ -1,0 +1,12 @@
+[
+  {
+    "folderID": "001",
+    "folderName": "Проект_1",
+    "empty": "notEmpty"
+  },
+  {
+    "folderID": "002",
+    "folderName": "Проект_2",
+    "empty": "empty"
+  }
+]

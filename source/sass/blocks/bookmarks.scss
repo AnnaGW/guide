@@ -1,0 +1,62 @@
+.bookmarks {
+  padding-left: 5px;
+  border-bottom: 2px solid $color-turquoise;
+}
+
+.bookmarks__list {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bookmarks__item {
+  position: relative;
+  margin-right: 5px;
+  padding: 5px 10px;
+  padding-right: 32px;
+  color: $color-grey-light;
+  cursor: default;
+  caret-color: transparent;
+
+  &--current {
+    color: #000000;
+    border: 1px solid $color-turquoise;
+    border-bottom: none;
+  }
+}
+
+.bookmark__close {
+  position: absolute;
+  top: 7px;
+  right: 5px;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 12px;
+    width: 1px;
+    height: 20px;
+    background-color: $color-turquoise;
+    transform: rotate(45deg);
+    transform-origin: center;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 12px;
+    width: 1px;
+    height: 20px;
+    background-color: $color-turquoise;
+    transform: rotate(-45deg);
+    transform-origin: center;
+  }
+}

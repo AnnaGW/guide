@@ -1,0 +1,10 @@
+.guide {
+  padding-left: 30px;
+}
+
+.guide__wrap {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto;
+  column-gap: 20px;
+}

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+  <head>
+    <meta charset="utf-8">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <title>Тестовое задание для Инфтех</title>
+    <link href="css/style.min.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+    <header>
+      <div class="main-menu">
+        <ul class="main-menu__list">
+          <li>
+            <button class="main-menu__item js-folder-create">Создать папку</button>
+          </li>
+          <li>
+            <button class="main-menu__item js-folder-delete" disabled>Удалить папку</button>
+          </li>
+          <li>
+            <form action="index.html" enctype="multipart/form-data" method="post">
+              <input class="visually-hidden" type="file" id="upload-file" name="filename" required accept="application/json, text/plain, application/xml, text/xml">
+              <label class="main-menu__upload js-file-upload"  for="upload-file">Загрузить файл</label>
+            </form>
+          </li>
+          <li><a class="main-menu__download main-menu__item--disabled js-file-download" download>Скачать файл</a></li>
+          <li>
+            <button class="main-menu__item js-file-delete" disabled>Удалить файл</button>
+          </li>
+          <li>
+            <button class="main-menu__item js-rename" disabled>Переименовать</button>
+          </li>
+        </ul>
+      </div>
+    </header>
+    <main class="guide">
+      <h1 class="visually-hidden">Проводник</h1>
+      <div class="guide__wrap">
+        <div class="tree">
+          <ul class="tree__list list">
+          </ul>
+        </div>
+        <div class="viewing">
+          <div class="viewing__bookmarks bookmarks">
+            <ul class="bookmarks__list">
+              <li class="bookmarks__item js-bookmarks__item--zero">
+                <span>Имя файла</span>
+              </li>
+              <!-- <li class="bookmarks__item">MainWindow.xaml</li> -->
+            </ul>
+          </div>
+          <div class="viewing__area text-area">
+            <textarea class="js-text-area--zero" name="name" rows="8" cols="80">Здесь будет отображаться содержимое файла</textarea>
+          </div>
+          <button class="viewing__button button" type="button" name="button">Сохранить</button>
+        </div>
+      </div>
+    </main>
+    <section class="deleting to-delete">
+      <div class="overlay">
+        <div class="popup">
+          <p class="deleting__text">Удалить <span></span></p>
+          <button class="popup__button js-popup-button-delete" type="button" name="button">Удалить</button>
+          <button class="popup__close js-popup-close-deleting" type="button" name="button"></button>
+        </div>
+      </div>
+    </section>
+    <section class="renaming to-delete">
+      <div class="overlay">
+        <div class="popup">
+          <p class="renaming__text">Переименовать <span></span></p>
+            <div class="popup__input-wrap">
+              <input class="popup__input js-popup-input-rename" type="text" name="" value="">
+              <p class="validation-message js-validation-message to-delete"></p>
+            </div>
+          <button class="popup__button js-popup-button-rename" type="button" name="button" disabled>Переименовать</button>
+          <button class="popup__close js-popup-close-renaming" type="button" name="button"></button>
+        </div>
+      </div>
+    </section>
+    <section class="creation to-delete">
+      <div class="overlay">
+        <div class="popup">
+          <p class="creation__text">Создать папку</p>
+          <div class="popup__input-wrap">
+            <p class="validation-message js-validation-message to-delete"></p>
+            <input class="popup__input js-popup-input-create" type="text" name="" value="">
+          </div>
+          <button class="popup__button js-popup-button-create" type="button" name="button" disabled>Создать</button>
+          <button class="popup__close js-popup-close-creation" type="button" name="button"></button>
+        </div>
+      </div>
+    </section>
+    <section class="message to-delete">
+      <div class="overlay">
+        <div class="popup">
+          <p class="message__static-text">что-то пошло не так...</p>
+          <p class="message__dynamic-text"></p>
+          <button class="popup__button js-popup-button-clear" type="button" >Понятно</button>
+        </div>
+      </div>
+    </section>
+    <script src="js/script.js"></script>
+  </body>
+</html>

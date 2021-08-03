@@ -1,0 +1,137 @@
+.tree {
+  min-width: 250px;
+}
+
+.tree__sublist {
+  margin: 0;
+  padding: 0;
+  padding-left: 35px;
+  list-style: none;
+}
+
+.tree li {
+  position: relative;
+}
+
+.tree__files-description {
+  position: absolute;
+  z-index: 10;
+  width: 200px;
+  padding: 5px;
+  font-size: 12px;
+  line-height: 18px;
+  text-align: center;
+  letter-spacing: 1px;
+  background-color: #ffffff;
+  border: 1px solid $color-turquoise;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+}
+
+.tree__files-atom {
+  position: relative;
+  width: auto;
+  margin: 0;
+  padding: 5px;
+  padding-left: 45px;
+  cursor: default;
+  caret-color: transparent;
+}
+
+.tree__files-atom span {
+  position: absolute;
+  top: 0;
+  left: 15px;
+  width: 15px;
+  height: 34px;
+  background-repeat: no-repeat;
+  background-position: left;
+  background-size: contain;
+}
+
+.tree__folders-atom {
+  position: relative;
+  width: auto;
+  margin: 0;
+  padding: 5px;
+  padding-left: 45px;
+  cursor: default;
+  caret-color: transparent;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 15px;
+    width: 20px;
+    height: 34px;
+    background-repeat: no-repeat;
+    background-position: left;
+    background-size: contain;
+  }
+
+  &--opened {
+    &::before {
+      background-image: url("../img/folder-open-45.png");
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 9px;
+      left: 0;
+      width: 0;
+      height: 0;
+      border: 6px solid $color-turquoise;
+      border-top-color: transparent;
+      border-right: none;
+      border-bottom-color: transparent;
+      transform: rotate(45deg);
+    }
+  }
+
+  &--closed {
+    &::before {
+      background-image: url("../img/folder-close-40.png");
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 9px;
+      left: 0;
+      width: 0;
+      height: 0;
+      border: 6px solid $color-turquoise;
+      border-top-color: transparent;
+      border-right: none;
+      border-bottom-color: transparent;
+    }
+  }
+}
+
+.tree__folders-atom--empty {
+  position: relative;
+  width: auto;
+  margin: 0;
+  padding: 5px;
+  padding-left: 45px;
+  cursor: default;
+  caret-color: transparent;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 15px;
+    width: 20px;
+    height: 34px;
+    background-repeat: no-repeat;
+    background-position: left;
+    background-size: contain;
+    background-image: url("../img/folder-close-40.png");
+  }
+}
+
+.tree__atom-current {
+  background-color: #d7eeee;
+}

@@ -1,0 +1,41 @@
+.main-menu {
+  margin-bottom: 30px;
+  background-color: $color-turquoise-light;
+}
+
+.main-menu__list {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.main-menu__item { //button
+  padding: 10px;
+  font: inherit;
+  letter-spacing: 2px;
+  background-color: inherit;
+  border: none;
+  outline: none;
+  cursor: default;
+  caret-color: transparent;
+
+  &--disabled,
+  &:disabled { //a
+    color: $color-grey-light;
+  }
+}
+
+.main-menu__upload {
+  display: block;
+  padding: 10px;
+  cursor: default;
+  caret-color: transparent;
+}
+
+.main-menu__download {
+  display: block;
+  padding: 10px;
+  cursor: default;
+  caret-color: transparent;
+}
