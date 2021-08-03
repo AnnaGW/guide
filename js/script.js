@@ -158,7 +158,7 @@
   };
 
   $(window).load(function () {
-    var treeUrl = '../jsons/tree0.json';
+    var treeUrl = 'jsons/tree0.json';
     window.server.download(treeUrl, onSuccessFirstFolders, onErrorFirstFolders);
   });
 
