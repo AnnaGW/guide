@@ -210,7 +210,7 @@ var onErrorFile = function () {
 
 function fileView (selectedFile) {
   //формируем адрес запроса в зависимости от выбранного файла
-  var dataUrl = '../jsons/' + selectedFile.id + '.json';
+  var dataUrl = 'guide/jsons/' + selectedFile.id + '.json';
   //загружаем данные о файле с сервера, !!!пока статичные json-ы
   window.server.download(dataUrl, onSuccessFile, onErrorFile);
 };
@@ -401,7 +401,7 @@ $('.js-rename').click(openPopupRenaming);
           $('ul#sublist-' + $(this).attr('id') ).removeClass('to-delete');
         } else {
           //запрашваем данные с сервера
-          var subFoldersUrl = '../jsons/tree-' + $(this).attr('id') + '.json';
+          var subFoldersUrl = 'guide/jsons/tree-' + $(this).attr('id') + '.json';
           window.server.download(subFoldersUrl, onSuccessSubFolders, onErrorSubFolders);
         }
     } else {
