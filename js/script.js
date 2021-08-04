@@ -355,7 +355,9 @@ window.menuEvents = {
 
       } else if (serverData[i].hasOwnProperty('fileId')) {
         $('#sublist-' + parentFolderId).append('<li><p id="' + serverData[i].fileId + '" class="tree__files-atom"><span></span>' + serverData[i].fileName + '.' + serverData[i].fileType + '</p></li>');
-        var iconUrl = 'url("' + serverData[i].fileIcon + '")';
+        //var iconUrl = 'url("' + serverData[i].fileIcon + '")';
+        var iconUrl = 'url("https://annagw.github.io/guide/img/json-ico.png")';
+        
         $('#' + serverData[i].fileId + ' span').css('background-image', iconUrl);
         $('#' + serverData[i].fileId).after('<p class="tree__files-description to-delete">' + serverData[i].fileDescription + '</p>');
       } else {
