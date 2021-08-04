@@ -132,7 +132,7 @@
   };
 
   $(window).load(function () {
-    var treeUrl = '../jsons/tree0.json';
+    var treeUrl = 'https://annagw.github.io/guide/jsons/tree0.json';
     window.server.download(treeUrl, onSuccessFirstFolders, onErrorFirstFolders);
   });
 
@@ -339,7 +339,7 @@ window.menuEvents = {
   //обработчики загрузки данных с сервера
   function onSuccessSubFolders (url, serverData) {
     //выделяем id родительской папки из url
-    var parentFolderId = url.replace('../jsons/tree-', '').replace('.json', '');
+    var parentFolderId = url.replace('https://annagw.github.io/guide/jsons/tree-', '').replace('.json', '');
     $('#' + parentFolderId).after('<ul id="sublist-' + parentFolderId + '" class="tree__sublist"></ul>');
     //запускаем цикл по массиву объектов;
     for (var i = 0; i < serverData.length; i++) {
@@ -401,7 +401,7 @@ window.menuEvents = {
           $('ul#sublist-' + $(this).attr('id') ).removeClass('to-delete');
         } else {
           //запрашваем данные с сервера
-          var subFoldersUrl = '../jsons/tree-' + $(this).attr('id') + '.json';
+          var subFoldersUrl = 'https://annagw.github.io/guide/jsons/tree-' + $(this).attr('id') + '.json';
           window.server.download(subFoldersUrl, onSuccessSubFolders, onErrorSubFolders);
         }
     } else {
