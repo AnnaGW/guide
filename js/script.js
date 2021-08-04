@@ -185,7 +185,7 @@ var onErrorFile = function () {
 
 function fileView (selectedFile) {
   //формируем адрес запроса в зависимости от выбранного файла
-  var dataUrl = '../jsons/' + selectedFile.id + '.json';
+  var dataUrl = 'https://annagw.github.io/guide/jsons/' + selectedFile.id + '.json';
   //загружаем данные о файле с сервера, !!!пока статичные json-ы
   window.server.download(dataUrl, onSuccessFile, onErrorFile);
 };
