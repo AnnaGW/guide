@@ -4,7 +4,6 @@
 
   function tooltipShow(evt) {
     //позиционируем: получаем координаты мыши внутри files-tree__atom, задаем значения top и left для подсказки
-    console.log('hover');
     var coordX = evt.pageX - $(this).offset().left;
     var coordY = evt.pageY - $(this).offset().top;
     $(this).next().css({'top': coordY, 'left': coordX});

@@ -8,7 +8,8 @@ body {
   line-height: 1.5;
   font-family: "Arial", "Verdana", "Helvetica", sans-serif;
   text-align: left;
-  letter-spacing: 2px; }
+  letter-spacing: 2px;
+  overflow: hidden; }
 
 a {
   color: inherit;
@@ -261,6 +262,40 @@ img {
   color: #999999;
   border: 1px solid #99cccc;
   outline: none; }
+
+.animated-message__popup {
+  position: absolute;
+  right: -400px;
+  bottom: 50px;
+  z-index: 20;
+  width: 350px;
+  padding: 20px;
+  background-color: #ffffff;
+  border: 1px solid #99cccc; }
+  .animated-message__popup--animation {
+    -webkit-animation-name: animated-message-appearance;
+            animation-name: animated-message-appearance;
+    -webkit-animation-duration: 6s;
+            animation-duration: 6s; }
+
+.animated-message__text {
+  margin: 0; }
+
+@-webkit-keyframes animated-message-appearance {
+  from {
+    right: -400px; }
+  50% {
+    right: 50px; }
+  to {
+    right: -400px; } }
+
+@keyframes animated-message-appearance {
+  from {
+    right: -400px; }
+  50% {
+    right: 50px; }
+  to {
+    right: -400px; } }
 
 .container {
   padding-right: 30px;

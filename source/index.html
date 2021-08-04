@@ -51,7 +51,6 @@
               <li class="bookmarks__item js-bookmarks__item--zero">
                 <span>Имя файла</span>
               </li>
-              <!-- <li class="bookmarks__item">MainWindow.xaml</li> -->
             </ul>
           </div>
           <div class="viewing__area text-area">
@@ -61,38 +60,56 @@
         </div>
       </div>
     </main>
-    <section class="deleting to-delete">
+    <section class="deleting-file to-delete">
       <div class="overlay">
         <div class="popup">
-          <p class="deleting__text">Удалить <span></span></p>
-          <button class="popup__button js-popup-button-delete" type="button" name="button">Удалить</button>
-          <button class="popup__close js-popup-close-deleting" type="button" name="button"></button>
+          <form class="" action="index.html" method="post">
+            <p class="deleting-file__text">Удалить <span></span></p>
+            <input class="visually-hidden" type="text" name="deleting-file-name" value="">
+            <button class="popup__button js-popup-button-delete" type="button" name="button">Удалить</button>
+            <button class="popup__close js-popup-close-deleting" type="button" name="button"></button>
+          </form>
+        </div>
+      </div>
+    </section>
+    <section class="deleting-folder to-delete">
+      <div class="overlay">
+        <div class="popup">
+          <form class="" action="index.html" method="post">
+            <p class="deleting-folder__text">Удалить <span></span></p>
+            <button class="popup__button js-popup-button-delete" type="button" name="button">Удалить</button>
+            <button class="popup__close js-popup-close-deleting" type="button" name="button"></button>
+          </form>
         </div>
       </div>
     </section>
     <section class="renaming to-delete">
       <div class="overlay">
         <div class="popup">
-          <p class="renaming__text">Переименовать <span></span></p>
+          <form class="" action="index.html" method="post">
+            <p class="renaming__text">Переименовать <span></span></p>
             <div class="popup__input-wrap">
               <input class="popup__input js-popup-input-rename" type="text" name="" value="">
               <p class="validation-message js-validation-message to-delete"></p>
             </div>
-          <button class="popup__button js-popup-button-rename" type="button" name="button" disabled>Переименовать</button>
-          <button class="popup__close js-popup-close-renaming" type="button" name="button"></button>
+            <button class="popup__button js-popup-button-rename" type="button" name="button" disabled>Переименовать</button>
+            <button class="popup__close js-popup-close-renaming" type="button" name="button"></button>
+          </form>
         </div>
       </div>
     </section>
     <section class="creation to-delete">
       <div class="overlay">
         <div class="popup">
-          <p class="creation__text">Создать папку</p>
-          <div class="popup__input-wrap">
-            <p class="validation-message js-validation-message to-delete"></p>
-            <input class="popup__input js-popup-input-create" type="text" name="" value="">
-          </div>
-          <button class="popup__button js-popup-button-create" type="button" name="button" disabled>Создать</button>
-          <button class="popup__close js-popup-close-creation" type="button" name="button"></button>
+          <form class="" action="index.html" method="post">
+            <p class="creation__text">Создать папку</p>
+            <div class="popup__input-wrap">
+              <p class="validation-message js-validation-message to-delete"></p>
+              <input class="popup__input js-popup-input-create" type="text" name="" value="">
+            </div>
+            <button class="popup__button js-popup-button-create" type="button" name="button" disabled>Создать</button>
+            <button class="popup__close js-popup-close-creation" type="button" name="button"></button>
+          </form>
         </div>
       </div>
     </section>
@@ -103,6 +120,11 @@
           <p class="message__dynamic-text"></p>
           <button class="popup__button js-popup-button-clear" type="button" >Понятно</button>
         </div>
+      </div>
+    </section>
+    <section class="animated-message">
+      <div class="animated-message__popup">
+        <p class="animated-message__text">что-то очень важное произошло</p>
       </div>
     </section>
     <script src="js/script.js"></script>

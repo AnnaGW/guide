@@ -33,7 +33,8 @@ var onSuccessFile = function (url, serverData) {
   $('button.js-folder-delete').attr('disabled', 'true');
 
   //формируем атрибуты пунктов меню
-  $('.deleting__text span').html(fileFullName);
+  $('.deleting-file__text span').html(fileFullName);
+  $('.deleting-file input').val(serverData.fileId);
   $('.renaming__text span').html(fileFullName);
   $('.main-menu__download').attr('href', 'files/' + fileFullName);
 };

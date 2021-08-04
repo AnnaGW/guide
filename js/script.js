@@ -1,59 +1,16 @@
-'use strict';
-
-(function () {
-  var download = function (urlGet, onSuccess, onError) {
-    var xhr = new XMLHttpRequest();
-
-    xhr.responseType = 'json'; // !!!
-    xhr.open('GET', urlGet);
-
-    xhr.addEventListener('load', function () {
-      if (xhr.status === 200) {
-        //console.log('xhr.status' + xhr.status);
-        onSuccess(urlGet, xhr.response);
-      } else {
-        onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
-      }
-    });
-    xhr.addEventListener('error', function () {
-      onError('Произошла ошибка соединения');
-    });
-    xhr.addEventListener('timeout', function () {
-      onError('Запрос не успел выполниться за ' + xhr.timeout / 1000 + 'с');
-    });
-    xhr.timeout = 4000;
-
-    xhr.send();
+//показывает анимированное всплывающее сообщение
++function () {
+  'use strict';
+  function animatedMessageAppearance (text) {
+    $('.animated-message__text').html(text);
+    $('.animated-message__popup').addClass('animated-message__popup--animation');
   };
 
-  var upload = function (data, onSuccess, onError) {
-    var xhr = new XMLHttpRequest();
-    xhr.responseType = 'json';
-
-    xhr.addEventListener('load', function () {
-      if (xhr.status === 200) {
-        onSuccess();
-      } else {
-        onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
-      }
-    });
-    xhr.addEventListener('error', function () {
-      onError();
-    });
-    xhr.addEventListener('timeout', function () {
-      onError();
-    });
-    xhr.timeout = 4000;
-
-    xhr.open('POST', window.consts.URL_POST);
-    xhr.send(data);
+  window.animation = {
+    animatedMessageAppearance: animatedMessageAppearance
   };
 
-  window.server = {
-    download: download,
-    upload: upload
-  };
-})();
+}(window.jQuery);
 
 +function () {
   'use strict';
@@ -135,6 +92,23 @@
 
 })();
 
+//удаление файла / папки;
++function () {
+  'use strict';
+  function fileDeleting (evt) {
+    console.log($('.deleting-file input').val());
+    $('#' + $('.deleting-file input').val()).remove();
+    window.menuEvents.closePopupDeletingFile();
+    var filename = $('.deleting-file__text span').html();
+    window.animation.animatedMessageAppearance('Файл ' + filename + ' удален');
+  };
+
+  window.deleting = {
+    fileDeleting: fileDeleting
+  };
+
+}(window.jQuery);
+
 //построение списка папок первого уровня; допущение: файлов нет;
 +function () {
   'use strict';
@@ -191,15 +165,16 @@ var onSuccessFile = function (url, serverData) {
   $('.text-area textarea').first().val(serverData.fileContent);
   window.bookmark.bookmarkToggle();//прослушка для переключения
 
-  //делаем доступными пункты меню
+  //делаем доступными пункты меню для файлов
   $('button.js-file-delete').removeAttr('disabled');
   $('button.js-rename').removeAttr('disabled');
-  $('button.js-js-folder-delete').removeAttr('disabled');
-  $('.js-file-upload').removeClass('main-menu__item--disabled');
   $('.js-file-download').removeClass('main-menu__item--disabled');
+  //делаем недоступными пункты меню для папок
+  $('button.js-folder-delete').attr('disabled', 'true');
 
   //формируем атрибуты пунктов меню
-  $('.deleting__text span').html(fileFullName);
+  $('.deleting-file__text span').html(fileFullName);
+  $('.deleting-file input').val(serverData.fileId);
   $('.renaming__text span').html(fileFullName);
   $('.main-menu__download').attr('href', 'files/' + fileFullName);
 };
@@ -224,20 +199,40 @@ window.fileview = {
 +function () {
   'use strict';
 
-function closePopupDeleting () {
-  $('.deleting').addClass('to-delete');
+function closePopupDeletingFile () {
+  $('.deleting-file').addClass('to-delete');
 
   //очистка поля с именем файла/папки
-  $('.js-popup-close-deleting').unbind('click', closePopupDeleting);
+  $('.js-popup-close-deleting').unbind('click', closePopupDeletingFile);
 };
 
-function openPopupDeleting () {
-  $('.deleting').removeClass('to-delete');
-  $('.js-popup-close-deleting').click(closePopupDeleting);
-  $('.js-popup-button-delete').click(closePopupDeleting);
+function openPopupDeletingFile () {
+  $('.deleting-file').removeClass('to-delete');
+  $('.js-popup-close-deleting').click(closePopupDeletingFile);
+  $('.js-popup-button-delete').click(window.deleting.fileDeleting);
   $('body').keydown(function(evt){
     if(evt.key === "Escape") {
-      closePopupDeleting();
+      closePopupDeletingFile();
+    }
+  });
+};
+
+//----------------------------------------------------------
+
+function closePopupDeletingFolder () {
+  $('.deleting-folder').addClass('to-delete');
+
+  //очистка поля с именем файла/папки
+  $('.js-popup-close-deleting').unbind('click', closePopupDeletingFolder);
+};
+
+function openPopupDeletingFolder () {
+  $('.deleting-folder').removeClass('to-delete');
+  $('.js-popup-close-deleting').click(closePopupDeletingFolder);
+  $('.js-popup-button-delete').click(closePopupDeletingFolder);
+  $('body').keydown(function(evt){
+    if(evt.key === "Escape") {
+      closePopupDeletingFolder();
     }
   });
 };
@@ -322,9 +317,14 @@ function openPopupCreation () {
 //----------------------------------------------------
 
 $('.js-folder-create').click(openPopupCreation);
-$('.js-folder-delete').click(openPopupDeleting);
-$('.js-file-delete').click(openPopupDeleting);
+$('.js-folder-delete').click(openPopupDeletingFolder);
+$('.js-file-delete').click(openPopupDeletingFile);
 $('.js-rename').click(openPopupRenaming);
+
+
+window.menuEvents = {
+  closePopupDeletingFile: closePopupDeletingFile
+};
 
 }(window.jQuery);
 
@@ -385,7 +385,7 @@ $('.js-rename').click(openPopupRenaming);
     $('button.js-rename').removeAttr('disabled');
     $('button.js-folder-delete').removeAttr('disabled');
     var folderName = $(this).html();
-    $('.deleting__text span').html(folderName);
+    $('.deleting-folder__text span').html(folderName);
     $('.renaming__text span').html(folderName);
     //делаем недоступными пункты меню для файлов
     $('button.js-file-download').attr('disabled', 'true');
@@ -448,6 +448,9 @@ $('.js-rename').click(openPopupRenaming);
     //делаем доступными пункты меню для папок
     $('button.js-rename').removeAttr('disabled');
     $('button.js-folder-delete').removeAttr('disabled');
+    var folderName = $(this).html();
+    $('.deleting-folder__text span').html(folderName);
+    $('.renaming__text span').html(folderName);
     //делаем недоступными пункты меню для файлов
     $('button.js-file-download').attr('disabled', 'true');
     $('button.js-file-download').removeAttr('href');
@@ -478,13 +481,69 @@ $('.js-rename').click(openPopupRenaming);
   };
 }(window.jQuery);
 
+'use strict';
+
+(function () {
+  var download = function (urlGet, onSuccess, onError) {
+    var xhr = new XMLHttpRequest();
+
+    xhr.responseType = 'json'; // !!!
+    xhr.open('GET', urlGet);
+
+    xhr.addEventListener('load', function () {
+      if (xhr.status === 200) {
+        //console.log('xhr.status' + xhr.status);
+        onSuccess(urlGet, xhr.response);
+      } else {
+        onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
+      }
+    });
+    xhr.addEventListener('error', function () {
+      onError('Произошла ошибка соединения');
+    });
+    xhr.addEventListener('timeout', function () {
+      onError('Запрос не успел выполниться за ' + xhr.timeout / 1000 + 'с');
+    });
+    xhr.timeout = 4000;
+
+    xhr.send();
+  };
+
+  var upload = function (data, onSuccess, onError) {
+    var xhr = new XMLHttpRequest();
+    xhr.responseType = 'json';
+
+    xhr.addEventListener('load', function () {
+      if (xhr.status === 200) {
+        onSuccess();
+      } else {
+        onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
+      }
+    });
+    xhr.addEventListener('error', function () {
+      onError();
+    });
+    xhr.addEventListener('timeout', function () {
+      onError();
+    });
+    xhr.timeout = 4000;
+
+    xhr.open('POST', window.consts.URL_POST);
+    xhr.send(data);
+  };
+
+  window.server = {
+    download: download,
+    upload: upload
+  };
+})();
+
 //открывает всплывающие подсказки к файлам
 +function () {
   'use strict';
 
   function tooltipShow(evt) {
     //позиционируем: получаем координаты мыши внутри files-tree__atom, задаем значения top и left для подсказки
-    console.log('hover');
     var coordX = evt.pageX - $(this).offset().left;
     var coordY = evt.pageY - $(this).offset().top;
     $(this).next().css({'top': coordY, 'left': coordX});

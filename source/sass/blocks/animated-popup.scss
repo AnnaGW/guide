@@ -1,0 +1,35 @@
+.animated-message {
+
+}
+
+.animated-message__popup {
+  position: absolute;
+  right: -400px;
+  bottom: 50px;
+  z-index: 20;
+  width: 350px;
+  padding: 20px;
+  background-color: #ffffff;
+  border: 1px solid $color-turquoise;
+
+  &--animation {
+    animation-name: animated-message-appearance;
+    animation-duration: 6s;
+  }
+}
+
+.animated-message__text {
+  margin: 0;
+}
+
+@keyframes animated-message-appearance {
+  from {
+    right: -400px;
+  }
+  50% {
+    right: 50px;
+  }
+  to {
+    right: -400px;
+  }
+}

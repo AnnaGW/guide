@@ -2,20 +2,40 @@
 +function () {
   'use strict';
 
-function closePopupDeleting () {
-  $('.deleting').addClass('to-delete');
+function closePopupDeletingFile () {
+  $('.deleting-file').addClass('to-delete');
 
   //очистка поля с именем файла/папки
-  $('.js-popup-close-deleting').unbind('click', closePopupDeleting);
+  $('.js-popup-close-deleting').unbind('click', closePopupDeletingFile);
 };
 
-function openPopupDeleting () {
-  $('.deleting').removeClass('to-delete');
-  $('.js-popup-close-deleting').click(closePopupDeleting);
-  $('.js-popup-button-delete').click(closePopupDeleting);
+function openPopupDeletingFile () {
+  $('.deleting-file').removeClass('to-delete');
+  $('.js-popup-close-deleting').click(closePopupDeletingFile);
+  $('.js-popup-button-delete').click(window.deleting.fileDeleting);
   $('body').keydown(function(evt){
     if(evt.key === "Escape") {
-      closePopupDeleting();
+      closePopupDeletingFile();
+    }
+  });
+};
+
+//----------------------------------------------------------
+
+function closePopupDeletingFolder () {
+  $('.deleting-folder').addClass('to-delete');
+
+  //очистка поля с именем файла/папки
+  $('.js-popup-close-deleting').unbind('click', closePopupDeletingFolder);
+};
+
+function openPopupDeletingFolder () {
+  $('.deleting-folder').removeClass('to-delete');
+  $('.js-popup-close-deleting').click(closePopupDeletingFolder);
+  $('.js-popup-button-delete').click(closePopupDeletingFolder);
+  $('body').keydown(function(evt){
+    if(evt.key === "Escape") {
+      closePopupDeletingFolder();
     }
   });
 };
@@ -100,8 +120,13 @@ function openPopupCreation () {
 //----------------------------------------------------
 
 $('.js-folder-create').click(openPopupCreation);
-$('.js-folder-delete').click(openPopupDeleting);
-$('.js-file-delete').click(openPopupDeleting);
+$('.js-folder-delete').click(openPopupDeletingFolder);
+$('.js-file-delete').click(openPopupDeletingFile);
 $('.js-rename').click(openPopupRenaming);
+
+
+window.menuEvents = {
+  closePopupDeletingFile: closePopupDeletingFile
+};
 
 }(window.jQuery);

@@ -49,7 +49,7 @@
     $('button.js-rename').removeAttr('disabled');
     $('button.js-folder-delete').removeAttr('disabled');
     var folderName = $(this).html();
-    $('.deleting__text span').html(folderName);
+    $('.deleting-folder__text span').html(folderName);
     $('.renaming__text span').html(folderName);
     //делаем недоступными пункты меню для файлов
     $('button.js-file-download').attr('disabled', 'true');
@@ -112,6 +112,9 @@
     //делаем доступными пункты меню для папок
     $('button.js-rename').removeAttr('disabled');
     $('button.js-folder-delete').removeAttr('disabled');
+    var folderName = $(this).html();
+    $('.deleting-folder__text span').html(folderName);
+    $('.renaming__text span').html(folderName);
     //делаем недоступными пункты меню для файлов
     $('button.js-file-download').attr('disabled', 'true');
     $('button.js-file-download').removeAttr('href');
