@@ -141,7 +141,7 @@ var onErrorFile = function (url, serverNoAnswer) {
     window.onError.errorMessageShow('Содержимое файла не загружено');
   }
   //маркируем файл красным
-  var fileId = url.replace('../jsons/', '').replace('.json', '');
+  var fileId = url.replace('https://annagw.github.io/guide/jsons/', '').replace('.json', '');
   $('#' + fileId).addClass('errorFile');
   //снимаем атрибут data-opened
   $('#' + fileId).removeAttr('data-opened');
@@ -150,7 +150,7 @@ var onErrorFile = function (url, serverNoAnswer) {
 
 function fileView (selectedFileId) {
   //формируем адрес запроса в зависимости от выбранного файла
-  var dataUrl = '../jsons/' + selectedFileId + '.json';
+  var dataUrl = 'https://annagw.github.io/guide/jsons/' + selectedFileId + '.json';
   //загружаем данные о файле с сервера, !!!пока статичные json-ы
   window.server.download(dataUrl, onSuccessFile, onErrorFile);
 };
@@ -355,7 +355,7 @@ window.menuEvents = {
   //обработчики загрузки вложенного спииска с сервера
   function onSuccessSubFolders (url, serverData) {
     //выделяем id родительской папки из url
-    var parentFolderId = url.replace('../jsons/tree-', '').replace('.json', '');
+    var parentFolderId = url.replace('https://annagw.github.io/guide/jsons/tree-', '').replace('.json', '');
     $('#' + parentFolderId).after('<ul id="sublist-' + parentFolderId + '" class="tree__sublist"></ul>');
     //запускаем цикл по массиву объектов;
     for (var i = 0; i < serverData.length; i++) {
@@ -414,7 +414,7 @@ window.menuEvents = {
           $('ul#sublist-' + folderId ).removeClass('to-delete');
         } else {
           //запрашваем данные с сервера
-          var subFoldersUrl = '../jsons/tree-' + $(this).attr('id') + '.json';
+          var subFoldersUrl = 'https://annagw.github.io/guide/jsons/tree-' + $(this).attr('id') + '.json';
           window.server.download(subFoldersUrl, onSuccessSubFolders, onErrorSubFolders);
         }
     } else {
@@ -597,7 +597,7 @@ window.menuEvents = {
   };
 
   $(window).load(function () {
-    var treeUrl = '../jsons/tree0.json';
+    var treeUrl = 'https://annagw.github.io/guide/jsons/tree0.json';
     window.server.download(treeUrl, onSuccessFirstFolders, onErrorFirstFolders);
   });
 
