@@ -25,8 +25,13 @@
     //найходим id файла, соотв удаляемой закладке
     var fileId = $(this).closest('.bookmarks__item').attr('id').replace('bookmark-', '');
     var fileName = $(this).closest('.bookmarks__item').html();
-    //пока без проверки, был ли файл изменен и запроса на сохранение
+
+    //проверяем, был ли файл изменен
+    if ($(this).closest('.bookmarks__item').hasClass('bookmarks__item--changed')) {
+      window.util.doYouWantToSave (fileId, fileName);
+    } else {
       window.util.viewAreaClose(fileId);
+    }
   };
 //-------------------------------------------------------------------
   //переключатель вкладок и textarea
@@ -49,7 +54,7 @@
 
     if ($(this).hasClass('bookmarks__item--changed')) {
       $('.viewing__button').removeAttr('disabled');
-      $('.viewing__button').click(window.util.onSaveButtonClick);
+      //$('.viewing__button').click(window.util.onSaveButtonClick);
     } else {
       $('.viewing__button').attr('disabled', 'true');
       $('.viewing__button').unbind('');
@@ -123,10 +128,10 @@ var onSuccessFile = function (url, serverData) {
   //создаем textarea для открываемого  файла
   $('.text-area').prepend('<textarea name="name" rows="8" cols="80" id="textarea-' + serverData.fileId + '"></textarea>');
   $('.text-area textarea').first().val(serverData.fileContent);
-
+  //прослушки
   $('#bookmark-' + serverData.fileId).children('.bookmark__close').click(window.bookmark.onBookmarkCloseClick);//прослушка для закрывашки
   $('#bookmark-' + serverData.fileId).click(window.bookmark.onBookmarkClick);//прослушка для переключения
-  $('.text-area textarea').keyup(window.util.onTextareaInput); //прослушка для изменения
+  $('#textarea-' + serverData.fileId).one('input', window.util.onTextareaInput); //прослушка для изменения
 
   //делаем доступными пункты меню для файлов
   window.menuAccyAttrs.menuForFile(serverData.fileId, fileFullName);
@@ -141,7 +146,7 @@ var onErrorFile = function (url, serverNoAnswer) {
     window.onError.errorMessageShow('Содержимое файла не загружено');
   }
   //маркируем файл красным
-  var fileId = url.replace('https://annagw.github.io/guide/jsons/', '').replace('.json', '');
+  var fileId = url.replace('../jsons/', '').replace('.json', '');
   $('#' + fileId).addClass('errorFile');
   //снимаем атрибут data-opened
   $('#' + fileId).removeAttr('data-opened');
@@ -150,7 +155,7 @@ var onErrorFile = function (url, serverNoAnswer) {
 
 function fileView (selectedFileId) {
   //формируем адрес запроса в зависимости от выбранного файла
-  var dataUrl = 'https://annagw.github.io/guide/jsons/' + selectedFileId + '.json';
+  var dataUrl = '../jsons/' + selectedFileId + '.json';
   //загружаем данные о файле с сервера, !!!пока статичные json-ы
   window.server.download(dataUrl, onSuccessFile, onErrorFile);
 };
@@ -355,7 +360,7 @@ window.menuEvents = {
   //обработчики загрузки вложенного спииска с сервера
   function onSuccessSubFolders (url, serverData) {
     //выделяем id родительской папки из url
-    var parentFolderId = url.replace('https://annagw.github.io/guide/jsons/tree-', '').replace('.json', '');
+    var parentFolderId = url.replace('../jsons/tree-', '').replace('.json', '');
     $('#' + parentFolderId).after('<ul id="sublist-' + parentFolderId + '" class="tree__sublist"></ul>');
     //запускаем цикл по массиву объектов;
     for (var i = 0; i < serverData.length; i++) {
@@ -414,7 +419,7 @@ window.menuEvents = {
           $('ul#sublist-' + folderId ).removeClass('to-delete');
         } else {
           //запрашваем данные с сервера
-          var subFoldersUrl = 'https://annagw.github.io/guide/jsons/tree-' + $(this).attr('id') + '.json';
+          var subFoldersUrl = '../jsons/tree-' + $(this).attr('id') + '.json';
           window.server.download(subFoldersUrl, onSuccessSubFolders, onErrorSubFolders);
         }
     } else {
@@ -597,7 +602,7 @@ window.menuEvents = {
   };
 
   $(window).load(function () {
-    var treeUrl = 'https://annagw.github.io/guide/jsons/tree0.json';
+    var treeUrl = '../jsons/tree0.json';
     window.server.download(treeUrl, onSuccessFirstFolders, onErrorFirstFolders);
   });
 
@@ -608,37 +613,26 @@ window.menuEvents = {
   'use strict';
 
   function onUploaded () {
+    var uploadedFile = $(this)[0].files[0];
+    var uploadedFileName = uploadedFile.name;
+
     var reader = new FileReader();
-  	reader.onload = function(e){
-
-      //var fileFullName = ;
-
-      //создаем закладку с именем файла
-      //скрываем bookmarks__item--zero и убираем класс current у всех элем-тов
+    reader.readAsText(uploadedFile);
+    reader.onload = function(evt) {
       $('.js-bookmarks__item--zero').addClass('to-delete');
       $('.bookmarks__item').removeClass('bookmarks__item--current');
-      //создаем новый без id
       var bookmarkCloseButton = '<button class="bookmark__close"></button>';
-      //$('.bookmarks__list').prepend('<li class="bookmarks__item bookmarks__item--current id="bookmark-new"><span>' + fileFullName + '</span>' + bookmarkCloseButton + '</li>');
-
-      $('.bookmarks__list').prepend('<li class="bookmarks__item bookmarks__item--current" id="bookmark-new"><span>Новый файл</span>' + bookmarkCloseButton + '</li>');
-
+      $('.bookmarks__list').prepend('<li class="bookmarks__item bookmarks__item--current" id="bookmark-new"><span>' + uploadedFileName + '</span>' + bookmarkCloseButton + '</li>');
       //отображение содержимого файла
-      //скрываем js-text-area--zero
       $('.text-area textarea').addClass('to-delete');
       //создаем textarea для открываемого  файла
       $('.text-area').prepend('<textarea id="textarea-new" name="name" rows="8" cols="80"></textarea>');
-      $('.text-area textarea').first().val(e.target.result);
-
-      //как повесить прослшку если нет id???
-      $('#bookmark-new').children('.bookmark__close').click(window.bookmark.bookmarkClose);//прослушка для закрывашки
-      $('#bookmark-new').click(window.bookmark.bookmarkToggle);//прослушка для переключения
-
-      //делаем недоступными пункты меню
-      window.menuAccyAttrs.menuZeroState();
-      //можно вынести это вынсти в отдельную функцию, но надо думать как правильно передать данные
-  	};
-  	reader.readAsText($('#upload-file')[0].files[0], 'UTF-8');
+      $('.text-area textarea').first().val(evt.target.result);
+      //прослушки
+      $('#bookmark-new').children('.bookmark__close').click(window.bookmark.onBookmarkCloseClick);//прослушка для закрывашки
+      $('#bookmark-new').click(window.bookmark.onBookmarkClick);//прослушка для переключения
+      $('.text-area textarea').keyup(window.util.onTextareaInput); //прослушка для изменения
+    };
   };
 
   //обрабатываем событие change после выбора файла
@@ -657,24 +651,24 @@ window.menuEvents = {
     $('.tree__folders-atom--empty').removeClass('tree__atom-current');
   };
 
-  function onTextareaInput (evt) {
+  function onTextareaInput () {
     //получить id из this
     var id = $(this).attr('id').replace('textarea-', '');
     //по id найти соотв закладку и дать ей класс --changed
     $('.bookmarks__item').filter('#bookmark-' + id).addClass('bookmarks__item--changed');
-    //$('.bookmarks__item').filter('#bookmark-' + id).attr('data-changed', 'changed');
     //снять disabled с кнопки
     $('.viewing__button').removeAttr('disabled');
     $('.viewing__button').click(window.util.onSaveButtonClick);
   };
 
   function onSaveButtonClick () {
-    var fileName = $('.bookmarks__item').filter('.bookmarks__item--current').html();
-    window.animation.animatedMessageAppearance ('файл ' + fileName + ' сохранен');
+    var fileName = $('.bookmarks__item').filter('.bookmarks__item--current').children('span').html();
+    var fileId = $('.bookmarks__item').filter('.bookmarks__item--current').attr('id').replace('bookmark-', '');
     $('.bookmarks__item').filter('.bookmarks__item--current').removeClass('bookmarks__item--changed');
     $('.viewing__button').attr('disabled', 'true');
     $('.viewing__button').unbind('');
-  }
+    window.animation.animatedMessageAppearance ('файл ' + fileName + ' сохранен');
+  };
 
   function doYouWantToSave (fileId, fileName) {
     $('.message-tosave__text-1').html('Файл ' + fileName + ' был изменен.');
@@ -683,22 +677,31 @@ window.menuEvents = {
     $('.js-tosave-button-esc').click(function () {
       $('.message-tosave').addClass('to-delete');
       console.log('esc');
-      return 'esc';
+      $('.js-tosave-button-esc').unbind('');
+      $('.js-tosave-button-no').unbind('');
+      $('.js-tosave-button-yes').unbind('');
+      return;
     });
     $('.js-tosave-button-no').click(function () {
       $('.message-tosave').addClass('to-delete');
       console.log('no');
-      return 'no';
+      window.util.viewAreaClose(fileId);
+      $('.js-tosave-button-esc').unbind('');
+      $('.js-tosave-button-no').unbind('');
+      $('.js-tosave-button-yes').unbind('');
     });
     $('.js-tosave-button-yes').click(function () {
       $('.message-tosave').addClass('to-delete');
       console.log('yes');
-      return 'yes';
+      $('.viewing__button').trigger('click');
+      window.util.viewAreaClose(fileId);
+      $('.js-tosave-button-esc').unbind('');
+      $('.js-tosave-button-no').unbind('');
+      $('.js-tosave-button-yes').unbind('');
     });
   };
   function viewAreaClose (fileId) {
-    console.log('fileId in viewAreaClose = ' + fileId);
-    //------начало закрывашки------
+    console.log('viewAreaClose ' + fileId);
     $('.bookmarks__item').filter('#bookmark-' + fileId).remove();
     //по id найходим textarea и удаляем его
     $('.text-area textarea').filter('#textarea-' + fileId).remove();
@@ -741,7 +744,6 @@ window.menuEvents = {
         $('.viewing__button').unbind('');
       }
     }
-    //------конец закрывашки------
   };
 
   window.util = {

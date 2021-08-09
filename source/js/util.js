@@ -9,24 +9,24 @@
     $('.tree__folders-atom--empty').removeClass('tree__atom-current');
   };
 
-  function onTextareaInput (evt) {
+  function onTextareaInput () {
     //получить id из this
     var id = $(this).attr('id').replace('textarea-', '');
     //по id найти соотв закладку и дать ей класс --changed
     $('.bookmarks__item').filter('#bookmark-' + id).addClass('bookmarks__item--changed');
-    //$('.bookmarks__item').filter('#bookmark-' + id).attr('data-changed', 'changed');
     //снять disabled с кнопки
     $('.viewing__button').removeAttr('disabled');
     $('.viewing__button').click(window.util.onSaveButtonClick);
   };
 
   function onSaveButtonClick () {
-    var fileName = $('.bookmarks__item').filter('.bookmarks__item--current').html();
-    window.animation.animatedMessageAppearance ('файл ' + fileName + ' сохранен');
+    var fileName = $('.bookmarks__item').filter('.bookmarks__item--current').children('span').html();
+    var fileId = $('.bookmarks__item').filter('.bookmarks__item--current').attr('id').replace('bookmark-', '');
     $('.bookmarks__item').filter('.bookmarks__item--current').removeClass('bookmarks__item--changed');
     $('.viewing__button').attr('disabled', 'true');
     $('.viewing__button').unbind('');
-  }
+    window.animation.animatedMessageAppearance ('файл ' + fileName + ' сохранен');
+  };
 
   function doYouWantToSave (fileId, fileName) {
     $('.message-tosave__text-1').html('Файл ' + fileName + ' был изменен.');
@@ -35,22 +35,31 @@
     $('.js-tosave-button-esc').click(function () {
       $('.message-tosave').addClass('to-delete');
       console.log('esc');
-      return 'esc';
+      $('.js-tosave-button-esc').unbind('');
+      $('.js-tosave-button-no').unbind('');
+      $('.js-tosave-button-yes').unbind('');
+      return;
     });
     $('.js-tosave-button-no').click(function () {
       $('.message-tosave').addClass('to-delete');
       console.log('no');
-      return 'no';
+      window.util.viewAreaClose(fileId);
+      $('.js-tosave-button-esc').unbind('');
+      $('.js-tosave-button-no').unbind('');
+      $('.js-tosave-button-yes').unbind('');
     });
     $('.js-tosave-button-yes').click(function () {
       $('.message-tosave').addClass('to-delete');
       console.log('yes');
-      return 'yes';
+      $('.viewing__button').trigger('click');
+      window.util.viewAreaClose(fileId);
+      $('.js-tosave-button-esc').unbind('');
+      $('.js-tosave-button-no').unbind('');
+      $('.js-tosave-button-yes').unbind('');
     });
   };
   function viewAreaClose (fileId) {
-    console.log('fileId in viewAreaClose = ' + fileId);
-    //------начало закрывашки------
+    console.log('viewAreaClose ' + fileId);
     $('.bookmarks__item').filter('#bookmark-' + fileId).remove();
     //по id найходим textarea и удаляем его
     $('.text-area textarea').filter('#textarea-' + fileId).remove();
@@ -93,7 +102,6 @@
         $('.viewing__button').unbind('');
       }
     }
-    //------конец закрывашки------
   };
 
   window.util = {

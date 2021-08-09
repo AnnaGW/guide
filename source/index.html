@@ -23,10 +23,8 @@
             <button class="main-menu__item js-folder-delete" disabled>Удалить папку</button>
           </li>
           <li>
-            <form action="index.html" enctype="multipart/form-data" method="post">
               <input class="visually-hidden" type="file" id="upload-file" name="filename" required accept="application/json, text/plain, application/xml, text/xml">
               <label class="main-menu__upload js-file-upload"  for="upload-file">Загрузить файл</label>
-            </form>
           </li>
           <li><a class="main-menu__download main-menu__item--disabled js-file-download" download>Скачать файл</a></li>
           <li>
@@ -46,7 +44,7 @@
           </ul>
         </div>
         <div class="viewing">
-          <form class="" action="index.html" method="post">
+
             <div class="viewing__bookmarks bookmarks">
               <ul class="bookmarks__list">
                 <li class="bookmarks__item js-bookmarks__item--zero">
@@ -58,7 +56,7 @@
               <textarea class="js-text-area--zero" name="name" rows="8" cols="80" disabled>Здесь будет отображаться содержимое файла</textarea>
             </div>
             <button class="viewing__button button" type="button" name="button" disabled>Сохранить</button>
-          </form>
+
         </div>
       </div>
     </main>
@@ -121,7 +119,6 @@
           <p class="message__static-text">что-то пошло не так...</p>
           <p class="message__dynamic-text"></p>
           <button class="popup__button js-popup-button-message" type="button" >Понятно</button>
-          <button class="popup__button js-popup-button-esc" type="button" >Понятно</button>
         </div>
       </div>
     </section>

@@ -6,8 +6,13 @@
     //найходим id файла, соотв удаляемой закладке
     var fileId = $(this).closest('.bookmarks__item').attr('id').replace('bookmark-', '');
     var fileName = $(this).closest('.bookmarks__item').html();
-    //пока без проверки, был ли файл изменен и запроса на сохранение
+
+    //проверяем, был ли файл изменен
+    if ($(this).closest('.bookmarks__item').hasClass('bookmarks__item--changed')) {
+      window.util.doYouWantToSave (fileId, fileName);
+    } else {
       window.util.viewAreaClose(fileId);
+    }
   };
 //-------------------------------------------------------------------
   //переключатель вкладок и textarea
@@ -30,7 +35,7 @@
 
     if ($(this).hasClass('bookmarks__item--changed')) {
       $('.viewing__button').removeAttr('disabled');
-      $('.viewing__button').click(window.util.onSaveButtonClick);
+      //$('.viewing__button').click(window.util.onSaveButtonClick);
     } else {
       $('.viewing__button').attr('disabled', 'true');
       $('.viewing__button').unbind('');

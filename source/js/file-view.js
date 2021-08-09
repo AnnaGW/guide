@@ -24,10 +24,10 @@ var onSuccessFile = function (url, serverData) {
   //создаем textarea для открываемого  файла
   $('.text-area').prepend('<textarea name="name" rows="8" cols="80" id="textarea-' + serverData.fileId + '"></textarea>');
   $('.text-area textarea').first().val(serverData.fileContent);
-
+  //прослушки
   $('#bookmark-' + serverData.fileId).children('.bookmark__close').click(window.bookmark.onBookmarkCloseClick);//прослушка для закрывашки
   $('#bookmark-' + serverData.fileId).click(window.bookmark.onBookmarkClick);//прослушка для переключения
-  $('.text-area textarea').keyup(window.util.onTextareaInput); //прослушка для изменения
+  $('#textarea-' + serverData.fileId).one('input', window.util.onTextareaInput); //прослушка для изменения
 
   //делаем доступными пункты меню для файлов
   window.menuAccyAttrs.menuForFile(serverData.fileId, fileFullName);
