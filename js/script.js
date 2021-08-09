@@ -495,8 +495,7 @@ window.menuEvents = {
     xhr.open('GET', urlGet);
 
     xhr.addEventListener('load', function () {
-      if (xhr.status === 200) {
-        //console.log('xhr.status' + xhr.status);
+      if (xhr.status === 200) {        
         onSuccess(urlGet, xhr.response);
       } else {
         //onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
@@ -675,24 +674,21 @@ window.menuEvents = {
     $('.message-tosave__text-2').html('Сохранить изменения?');
     $('.message-tosave').removeClass('to-delete');
     $('.js-tosave-button-esc').click(function () {
-      $('.message-tosave').addClass('to-delete');
-      console.log('esc');
+      $('.message-tosave').addClass('to-delete');      
       $('.js-tosave-button-esc').unbind('');
       $('.js-tosave-button-no').unbind('');
       $('.js-tosave-button-yes').unbind('');
       return;
     });
     $('.js-tosave-button-no').click(function () {
-      $('.message-tosave').addClass('to-delete');
-      console.log('no');
+      $('.message-tosave').addClass('to-delete');      
       window.util.viewAreaClose(fileId);
       $('.js-tosave-button-esc').unbind('');
       $('.js-tosave-button-no').unbind('');
       $('.js-tosave-button-yes').unbind('');
     });
     $('.js-tosave-button-yes').click(function () {
-      $('.message-tosave').addClass('to-delete');
-      console.log('yes');
+      $('.message-tosave').addClass('to-delete');      
       $('.viewing__button').trigger('click');
       window.util.viewAreaClose(fileId);
       $('.js-tosave-button-esc').unbind('');
@@ -700,8 +696,7 @@ window.menuEvents = {
       $('.js-tosave-button-yes').unbind('');
     });
   };
-  function viewAreaClose (fileId) {
-    console.log('viewAreaClose ' + fileId);
+  function viewAreaClose (fileId) {    
     $('.bookmarks__item').filter('#bookmark-' + fileId).remove();
     //по id найходим textarea и удаляем его
     $('.text-area textarea').filter('#textarea-' + fileId).remove();

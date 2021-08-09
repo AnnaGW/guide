@@ -35,6 +35,6 @@
     "fileName": "App",
     "fileDescription": "этот файл выполняет очень важную функцию. Наверное",
     "fileType": "xaml",
-    "fileIcon": "../img/xaml-ico.png"
+    "fileIcon": "https://annagw.github.io/guide/img/xaml-ico.png"
   }
 ]
