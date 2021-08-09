@@ -41,6 +41,14 @@
   padding: 20px;
   background-color: #ffffff;
   transform: translateX(-150px);
+
+  &--tosave {
+    width: 400px;
+  }
+}
+
+.popup p {
+  caret-color: transparent;
 }
 
 .popup__input {
@@ -99,29 +107,24 @@
   position: absolute;
   top: 25px;
   left: 10px;
-  /*display: inline-block;*/
   margin: 0;
-  /*margin-left: 10px;*/
   padding: 5px;
   font-size: 14px;
   line-height: 14px;
   letter-spacing: 1px;
+  background-color: #ffffff;
   border: 1px solid $color-red;
   border-radius: 3px;
-  background-color: #ffffff;
 
-  &:before {
+  &::before {
     content: "";
     position: absolute;
     top: -5px;
     left: 3px;
-    /*width: 5px;
-    height: 5px;*/
     border: 5px solid $color-red;
     border-top: none;
-    border-left-color: transparent;
     border-right-color: transparent;
-    /*background-color: $color-red;*/
+    border-left-color: transparent;
   }
 }
 
@@ -159,6 +162,10 @@
   background-color: transparent;
   border: 1px solid $color-turquoise;
   outline: none;
+
+  &--tosave {
+    width: 120px;
+  }
 }
 
 .popup__button:disabled {

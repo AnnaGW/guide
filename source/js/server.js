@@ -12,14 +12,15 @@
         //console.log('xhr.status' + xhr.status);
         onSuccess(urlGet, xhr.response);
       } else {
-        onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
+        //onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
+        onError(urlGet, '');
       }
     });
     xhr.addEventListener('error', function () {
-      onError('Произошла ошибка соединения');
+      onError(urlGet, 'Произошла ошибка соединения');
     });
     xhr.addEventListener('timeout', function () {
-      onError('Запрос не успел выполниться за ' + xhr.timeout / 1000 + 'с');
+      onError(urlGet, 'Запрос не успел выполниться за ' + xhr.timeout / 1000 + 'с');
     });
     xhr.timeout = 4000;
 

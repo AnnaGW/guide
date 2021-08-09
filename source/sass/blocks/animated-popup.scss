@@ -1,7 +1,3 @@
-.animated-message {
-
-}
-
 .animated-message__popup {
   position: absolute;
   right: -400px;
@@ -26,9 +22,11 @@
   from {
     right: -400px;
   }
+
   50% {
     right: 50px;
   }
+
   to {
     right: -400px;
   }

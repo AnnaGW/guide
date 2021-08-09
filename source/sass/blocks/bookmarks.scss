@@ -24,6 +24,10 @@
     border: 1px solid $color-turquoise;
     border-bottom: none;
   }
+
+  &--changed {
+    color: $color-turquoise;
+  }
 }
 
 .bookmark__close {

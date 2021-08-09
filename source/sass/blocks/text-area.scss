@@ -1,15 +1,22 @@
 .text-area {
   padding: 10px;
+  padding-top: 0;
 }
 
 .text-area textarea {
   box-sizing: border-box;
   width: 100%;
   min-height: calc(100vh - 56px - 37px - 150px);
-  padding: 5px;
+  padding: 10px;
+  //padding-top: 15px;
   font-size: 18px;
   line-height: 1.5;
   color: $color-grey;
   border: 1px solid $color-turquoise;
+  border-top: none;
   outline: none;
+}
+
+.text-area textarea:disabled {
+  background-color: #ffffff;
 }

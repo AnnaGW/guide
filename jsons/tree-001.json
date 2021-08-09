@@ -14,27 +14,27 @@
     "fileName": "package",
     "fileDescription": "json, просто json",
     "fileType": "json",
-    "fileIcon": "https://annagw.github.io/guide/img/json-ico.png"
+    "fileIcon": "../img/json-ico.png"
   },
   {
     "fileId": "152",
     "fileName": "MainWindow",
     "fileDescription": "Логика взаимодействия для MainWindow.xaml",
     "fileType": "cs",
-    "fileIcon": "https://annagw.github.io/guide/img/cs-ico.png"
+    "fileIcon": "../img/cs-ico.png"
   },
   {
     "fileId": "151",
     "fileName": "MainWindow",
     "fileDescription": "этот файл что-то в главном окне отображает",
     "fileType": "xaml",
-    "fileIcon": "https://annagw.github.io/guide/img/xaml-ico.png"
+    "fileIcon": "../img/xaml-ico.png"
   },
   {
     "fileId": "149",
     "fileName": "App",
     "fileDescription": "этот файл выполняет очень важную функцию. Наверное",
     "fileType": "xaml",
-    "fileIcon": "https://annagw.github.io/guide/img/xaml-ico.png"
+    "fileIcon": "../img/xaml-ico.png"
   }
 ]

@@ -1,6 +1,6 @@
 +function () {
   'use strict';
-  //обработчики загрузки данных с сервера
+  //обработчики загрузки вложенного спииска с сервера
   function onSuccessSubFolders (url, serverData) {
     //выделяем id родительской папки из url
     var parentFolderId = url.replace('../jsons/tree-', '').replace('.json', '');
@@ -34,35 +34,32 @@
     $('.tree__files-atom').hover(window.tooltip.tooltipShow, window.tooltip.tooltipHide);
   };
 
-  function onErrorSubFolders () {
-    window.onError.errorMessageShow('Ошибка загрузки данных о вложенных файлах и папках');
+  function onErrorSubFolders (url, serverNoAnswer) {
+    if (serverNoAnswer) {
+      window.onError.errorMessageShow(serverNoAnswer);
+    } else {
+      window.onError.errorMessageShow('Ошибка загрузки данных о вложенных файлах и папках');
+    }
   };
 
   function onFolderClick () {//выполняется только для непустой папки
-    //id кликнутого элемента - $(this).attr('id');
     //маркируем
     $('.tree__folders-atom').removeClass('tree__atom-current');
     $('.tree__folders-atom--empty').removeClass('tree__atom-current');
     $('.tree__files-atom').removeClass('tree__atom-current');
     $(this).addClass('tree__atom-current');
-    //делаем доступными пункты меню для папок
-    $('button.js-rename').removeAttr('disabled');
-    $('button.js-folder-delete').removeAttr('disabled');
+    var folderId = $(this).attr('id');
     var folderName = $(this).html();
-    $('.deleting-folder__text span').html(folderName);
-    $('.renaming__text span').html(folderName);
-    //делаем недоступными пункты меню для файлов
-    $('button.js-file-download').attr('disabled', 'true');
-    $('button.js-file-download').removeAttr('href');
-    $('button.js-file-delete').attr('disabled', 'true');
+    //делаем доступными пункты меню для папок
+    window.menuAccyAttrs.menuForFolder(folderId, folderName);
 
     //проверяем, открыта папка или нет
     if ( $(this).hasClass('tree__folders-atom--closed') ) {
       $(this).removeClass('tree__folders-atom--closed');
       $(this).addClass('tree__folders-atom--opened');
-        //проверить, есть ли соседний ul с классом  tree__sublist
-        if ( $('ul#sublist-' + $(this).attr('id') ).length ) {
-          $('ul#sublist-' + $(this).attr('id') ).removeClass('to-delete');
+        //проверяем, были ли уже данные загружены = есть ли соседний ul с классом  tree__sublist
+        if ( $('ul#sublist-' + folderId ).length ) {
+          $('ul#sublist-' + folderId ).removeClass('to-delete');
         } else {
           //запрашваем данные с сервера
           var subFoldersUrl = '../jsons/tree-' + $(this).attr('id') + '.json';
@@ -72,33 +69,7 @@
       $(this).removeClass('tree__folders-atom--opened');
       $(this).addClass('tree__folders-atom--closed');
       //скрываем подсписок
-      $('ul#sublist-' + $(this).attr('id') ).addClass('to-delete');
-    }
-  };
-
-  //----------------------------------------------------------------------
-
-  function onFileClick () {
-    //маркируем строку с именем файла в дереве
-    $('.tree__folders-atom').removeClass('tree__atom-current');
-    $('.tree__folders-atom--empty').removeClass('tree__atom-current');
-    $('.tree__files-atom').removeClass('tree__atom-current');
-    $(this).addClass('tree__atom-current');
-
-    //проверяем: открыт файл или нет; если не открыт тогда выполняем запрос на сервер и отображение
-    if ( !$(this).attr('data-opened') ) {
-      $(this).attr('data-opened', 'opened');
-      //вызываем функцию отображения содержимого файла
-      window.fileview.fileView(this);
-    } else {
-      //если открыт, то переключаем вкладки
-      //получаем id выбранного файла, по нему находим закладку и textarea
-      var fileId = $(this).attr('id');
-      $('.bookmarks__item').removeClass('bookmarks__item--current');
-      $('.bookmarks__item').filter('#bookmark-' + fileId).addClass('bookmarks__item--current');
-
-      $('.text-area textarea').addClass('to-delete');
-      $('.text-area textarea').filter('#textarea-' + fileId).removeClass('to-delete');
+      $('ul#sublist-' + folderId).addClass('to-delete');
     }
   };
 
@@ -108,18 +79,30 @@
     $('.tree__folders-atom').removeClass('tree__atom-current');
     $('.tree__files-atom').removeClass('tree__atom-current');
     $(this).addClass('tree__atom-current');
-  //менять значок на открытую папку или нет????
-    //делаем доступными пункты меню для папок
-    $('button.js-rename').removeAttr('disabled');
-    $('button.js-folder-delete').removeAttr('disabled');
+    var folderId = $(this).attr('id');
     var folderName = $(this).html();
-    $('.deleting-folder__text span').html(folderName);
-    $('.renaming__text span').html(folderName);
-    //делаем недоступными пункты меню для файлов
-    $('button.js-file-download').attr('disabled', 'true');
-    $('button.js-file-download').removeAttr('href');
-    $('button.js-file-delete').attr('disabled', 'true');
+//менять значок на открытую папку или нет????
+    //делаем доступными пункты меню для папок
+    window.menuAccyAttrs.menuForFolder(folderId, folderName);
+  };
 
+  function onFileClick () {
+    //маркируем строку с именем файла в дереве
+    window.util.noMarker();
+    $(this).addClass('tree__atom-current');
+    var fileId = $(this).attr('id');
+    var fileName = $(this).html();
+
+    //проверяем: открыт файл или нет;
+    if ( !$(this).attr('data-opened') ) {
+      $(this).attr('data-opened', 'opened');
+      //если нет, вызываем функцию отображения содержимого файла
+      window.fileview.fileView(this.id);
+    } else {
+      //если открыт, то переключаем вкладки
+      //находим закладку соотв файлу в дереве и отдаем ее в
+      $('.bookmarks__item').filter('#bookmark-' + fileId).trigger('click');
+    }
   };
 
   window.onAtomClick = {

@@ -46,17 +46,19 @@
           </ul>
         </div>
         <div class="viewing">
-          <div class="viewing__bookmarks bookmarks">
-            <ul class="bookmarks__list">
-              <li class="bookmarks__item js-bookmarks__item--zero">
-                <span>Имя файла</span>
-              </li>
-            </ul>
-          </div>
-          <div class="viewing__area text-area">
-            <textarea class="js-text-area--zero" name="name" rows="8" cols="80">Здесь будет отображаться содержимое файла</textarea>
-          </div>
-          <button class="viewing__button button" type="button" name="button">Сохранить</button>
+          <form class="" action="index.html" method="post">
+            <div class="viewing__bookmarks bookmarks">
+              <ul class="bookmarks__list">
+                <li class="bookmarks__item js-bookmarks__item--zero">
+                  <span>Имя файла</span>
+                </li>
+              </ul>
+            </div>
+            <div class="viewing__area text-area">
+              <textarea class="js-text-area--zero" name="name" rows="8" cols="80" disabled>Здесь будет отображаться содержимое файла</textarea>
+            </div>
+            <button class="viewing__button button" type="button" name="button" disabled>Сохранить</button>
+          </form>
         </div>
       </div>
     </main>
@@ -64,10 +66,10 @@
       <div class="overlay">
         <div class="popup">
           <form class="" action="index.html" method="post">
-            <p class="deleting-file__text">Удалить <span></span></p>
+            <p class="deleting-file__text">Удалить <span></span>?</p>
             <input class="visually-hidden" type="text" name="deleting-file-name" value="">
-            <button class="popup__button js-popup-button-delete" type="button" name="button">Удалить</button>
-            <button class="popup__close js-popup-close-deleting" type="button" name="button"></button>
+            <button class="js-deleting-file__popup-button popup__button" type="button" name="button">Удалить</button>
+            <button class="js-deleting-file__popup-close popup__close" type="button" name="button"></button>
           </form>
         </div>
       </div>
@@ -76,9 +78,9 @@
       <div class="overlay">
         <div class="popup">
           <form class="" action="index.html" method="post">
-            <p class="deleting-folder__text">Удалить <span></span></p>
-            <button class="popup__button js-popup-button-delete" type="button" name="button">Удалить</button>
-            <button class="popup__close js-popup-close-deleting" type="button" name="button"></button>
+            <p class="deleting-folder__text">Удалить <span></span> и ее содержимое?</p>
+            <button class="js-deleting-folder__popup-button popup__button" type="button" name="button">Удалить</button>
+            <button class="js-deleting-folder__popup-close popup__close" type="button" name="button"></button>
           </form>
         </div>
       </div>
@@ -89,11 +91,11 @@
           <form class="" action="index.html" method="post">
             <p class="renaming__text">Переименовать <span></span></p>
             <div class="popup__input-wrap">
-              <input class="popup__input js-popup-input-rename" type="text" name="" value="">
-              <p class="validation-message js-validation-message to-delete"></p>
+              <input class="js-renaming__popup-input popup__input" type="text" name="" value="">
+              <p class="validation-message js-renaming__validation-message to-delete"></p>
             </div>
-            <button class="popup__button js-popup-button-rename" type="button" name="button" disabled>Переименовать</button>
-            <button class="popup__close js-popup-close-renaming" type="button" name="button"></button>
+            <button class="js-renaming__popup-button popup__button" type="button" name="button" disabled>Переименовать</button>
+            <button class="js-renaming__popup-close popup__close" type="button" name="button"></button>
           </form>
         </div>
       </div>
@@ -118,7 +120,21 @@
         <div class="popup">
           <p class="message__static-text">что-то пошло не так...</p>
           <p class="message__dynamic-text"></p>
-          <button class="popup__button js-popup-button-clear" type="button" >Понятно</button>
+          <button class="popup__button js-popup-button-message" type="button" >Понятно</button>
+          <button class="popup__button js-popup-button-esc" type="button" >Понятно</button>
+        </div>
+      </div>
+    </section>
+    <section class="message-tosave to-delete">
+      <div class="overlay">
+        <div class="popup popup--tosave">
+          <p class="message-tosave__text-1">мир изменился...</p>
+          <p class="message-tosave__text-2"></p>
+          <div class="message-tosave__button-wrap">
+            <button class="popup__button popup__button--tosave js-tosave-button-yes" type="button" >да</button>
+            <button class="popup__button popup__button--tosave js-tosave-button-no" type="button" >Нет</button>
+            <button class="popup__button popup__button--tosave js-tosave-button-esc" type="button" >Отмена</button>
+          </div>
         </div>
       </div>
     </section>
